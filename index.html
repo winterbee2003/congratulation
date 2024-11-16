@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✨ ยินดีด้วยกับการเรียนจบ! ✨</title>
+    
+    <!-- เพิ่ม favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
+    
     <style>
         body {
             margin: 0;
@@ -26,140 +30,145 @@
             align-items: center;
             z-index: 1000;
         }
+        @keyframes waveOut {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(50px) scale(0.8);
+                opacity: 0;
+            }
+        }
 
+        .wave-out {
+            animation: waveOut 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
         .loading-text {
-        display: flex;
-        gap: 10px;  /* ระยะห่างระหว่างตัวอักษร */
-        font-size: 96px;  /* เพิ่มขนาดตัวอักษร */
-        font-weight: bold;
-    }
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+            font-size: 96px;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
 
-    .loading-letter {
-        display: inline-block;
-        animation: dropIn 1s forwards, rainbow 2s infinite;
-        opacity: 0;
-        transform: translateY(-100vh);
-    }
-
-    @keyframes rainbow {
-        0% { color: #FF9999; }  /* สีพาสเทล */
-        20% { color: #FFCC99; }
-        40% { color: #FFFF99; }
-        60% { color: #99FF99; }
-        80% { color: #99FFFF; }
-        100% { color: #FF9999; }
-    }
-
-    @keyframes dropIn {
-        0% {
-            transform: translateY(-100vh);
+        .loading-letter {
+            display: inline-block;
+            animation: dropIn 1s forwards, rainbow 2s infinite;
             opacity: 0;
+            transform: translateY(-100vh);
+            text-shadow: 
+                0 0 10px rgba(255,255,255,0.8),
+                0 0 20px rgba(255,255,255,0.5),
+                0 0 30px rgba(255,255,255,0.3);
         }
-        60% {
-            transform: translateY(20px);
-            opacity: 1;
+
+        @keyframes rainbow {
+            0% { color: #FF9999; }
+            20% { color: #FFCC99; }
+            40% { color: #FFFF99; }
+            60% { color: #99FF99; }
+            80% { color: #99FFFF; }
+            100% { color: #FF9999; }
         }
-        100% {
-            transform: translateY(0);
-            opacity: 1;
+
+        @keyframes dropIn {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+            60% {
+                transform: translateY(20px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-    }
 
-    /* เพิ่มเอฟเฟกต์เงา */
-    .loading-letter {
-        text-shadow: 
-            0 0 10px rgba(255,255,255,0.5),
-            0 0 20px rgba(255,255,255,0.3),
-            0 0 30px rgba(255,255,255,0.2);
-    }
-
-    #mainContent {
-        display: none;
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .main-text {
-    font-size: 72px;
-    color: #FFD700;
-    text-align: center;
-    position: absolute;  /* เปลี่ยนเป็น absolute */
-    left: 50%;         /* จัดกึ่งกลางแนวนอน */
-    top: 40%;         /* ระยะห่างจากด้านบน */
-    transform: translate(-50%, -50%);  /* จัดให้อยู่กึ่งกลางพอดี */
-    width: 100%;
-    z-index: 2;
-    text-shadow: 
-        0 0 10px rgba(255,255,255,0.5),
-        0 0 20px rgba(255,255,255,0.3);
-    animation: pulse 2s infinite;
-}
-
-.sub-text {
-    font-size: 48px;
-    color: #00FFFF;
-    text-align: center;
-    position: absolute;  /* เปลี่ยนเป็น absolute */
-    left: 50%;         /* จัดกึ่งกลางแนวนอน */
-    top: 60%;         /* ระยะห่างจากด้านบน */
-    transform: translate(-50%, -50%);  /* จัดให้อยู่กึ่งกลางพอดี */
-    width: 100%;
-    z-index: 2;
-    text-shadow: 
-        0 0 10px rgba(255,255,255,0.3),
-        0 0 20px rgba(255,255,255,0.2);
-}
-
-
+        #mainContent {
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
         .star-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 1;  /* อยู่ด้านหลัง */
-    }
-
-    .star {
-        position: absolute;
-        color: white;
-        opacity: 0.6;
-        animation: twinkle 1.5s infinite;
-        z-index: 1;
-        font-size: 20px !important;  /* เพิ่มขนาดดาว */
-    }
-
-        .particle {
             position: absolute;
-            pointer-events: none;
-            animation: float 3s infinite;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
-        .firework {
+        .star {
             position: absolute;
-            animation: explode 1s forwards;
+            color: white;
+            opacity: 0.6;
+            animation: twinkle 1.5s infinite;
+            z-index: 1;
+        }
+
+        .main-text {
+            font-size: 85px;
+            color: #FFD700;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            z-index: 2;
+            text-shadow: 
+                0 0 10px rgba(255,255,255,0.5),
+                0 0 20px rgba(255,255,255,0.3),
+                0 0 30px rgba(255,215,0,0.3);
+            animation: textFadeIn 1s ease-out;
+            font-weight: bold;
+            padding: 0 20px;
+        }
+
+        .sub-text {
+            font-size: 55px;
+            color: #00FFFF;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 60%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            z-index: 2;
+            text-shadow: 
+                0 0 10px rgba(255,255,255,0.3),
+                0 0 20px rgba(255,255,255,0.2),
+                0 0 30px rgba(0,255,255,0.2);
+            animation: textFadeIn 1s ease-out 0.5s;
+            padding: 0 20px;
+        }
+
+        @keyframes textFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -30%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
         }
 
         @keyframes twinkle {
-        0%, 100% { opacity: 0.2; }
-        50% { opacity: 0.8; }
-    }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(10px, -10px); }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
-
-        @keyframes explode {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
-        }
-
-        @keyframes pulse {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(1.05); }
-    }
 
         .exit-button {
             position: fixed;
@@ -172,67 +181,191 @@
             cursor: pointer;
             z-index: 1000;
         }
+
+        .sound-control {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .sound-control:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         .background-effect {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        overflow: hidden;
-    }
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
 
-    .sparkle {
-        position: absolute;
-        background: white;
-        border-radius: 50%;
-        opacity: 0.2;
-        animation: sparkleAnim 2s infinite;
-    }
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: sparkleAnim 2s infinite;
+        }
 
-    @keyframes sparkleAnim {
-        0% { transform: scale(0); opacity: 0; }
-        50% { opacity: 0.5; }
-        100% { transform: scale(3); opacity: 0; }
-    }
+        @keyframes sparkleAnim {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        .button-container {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 30px;
+        }
 
-    /* ปรับปรุงสไตล์ loading screen */
-    #loadingScreen {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+        .loading-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            animation: glowing 2s infinite;
+            z-index: 2;
+        }
 
-    .loading-text {
-        display: flex;
-        gap: 15px;
-        font-size: 96px;
-        font-weight: bold;
-        position: relative;
-        z-index: 2;
-    }
+        @keyframes glowing {
+            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.2); }
+            100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+        }
 
-    .loading-letter {
-        display: inline-block;
-        animation: dropIn 1s forwards, rainbow 2s infinite;
-        opacity: 0;
-        transform: translateY(-100vh);
-        text-shadow: 
-            0 0 10px rgba(255,255,255,0.8),
-            0 0 20px rgba(255,255,255,0.5),
-            0 0 30px rgba(255,255,255,0.3);
-    }
+        .loading-letter {
+            font-size: 72px;
+            text-shadow: 
+                0 0 10px rgba(255,255,255,0.8),
+                0 0 20px rgba(255,255,255,0.5),
+                0 0 30px rgba(255,255,255,0.3),
+                0 0 40px rgba(255,192,203,0.3);
+        }
+
+        .play-button {
+            position: relative;
+            margin-top: 20px;
+            padding: 15px 40px;
+            font-size: 24px;
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            border: none;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255,105,180,0.3);
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,105,180,0.4);
+        }
+
+        .play-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                transparent 0%,
+                rgba(255, 255, 255, 0.5) 50%,
+                transparent 100%
+            );
+            animation: none;
+            transition: 0.5s ease;
+        }
+
+        .play-button:hover::before {
+            animation: shine 1s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+
+        .loading-stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .loading-star {
+            position: absolute;
+            color: white;
+            opacity: 0.6;
+            animation: twinkleLoadingStar 1.5s infinite;
+        }
+
+        @keyframes twinkleLoadingStar {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
     </style>
 </head>
 <body>
     <div id="loadingScreen"></div>
     <div id="mainContent">
         <button class="exit-button" onclick="window.close()">×</button>
+        <button class="sound-control" id="soundControl">🔊</button>
+        <div class="background-effect"></div>
         <div class="main-text" id="mainText"></div>
         <div class="sub-text" id="subText"></div>
     </div>
+
+    <audio id="bgMusic" loop>
+        <source src="a.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const messages = [
@@ -261,162 +394,326 @@
             "ขอให้มีความสุขกับการทำงาน"
         ];
 
+        let currentIndex = 0;
+
+        function createBackgroundEffect() {
+            const background = document.createElement('div');
+            background.className = 'background-effect';
+            document.getElementById('mainContent').appendChild(background);
+
+            function createSparkle() {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.width = Math.random() * 10 + 5 + 'px';
+                sparkle.style.height = sparkle.style.width;
+                background.appendChild(sparkle);
+
+                setTimeout(() => sparkle.remove(), 2000);
+            }
+
+            setInterval(createSparkle, 200);
+        }
+
         function createLoadingScreen() {
-        const loadingScreen = document.getElementById('loadingScreen');
-        const loadingText = document.createElement('div');
-        loadingText.className = 'loading-text';
-        
-        // แยกข้อความเป็นแต่ละตัวอักษร
-        const text = "CONGRATULATE";
-        text.split('').forEach((letter, i) => {
-            const span = document.createElement('span');
-            span.className = 'loading-letter';
-            span.textContent = letter;
-            span.style.animationDelay = `${i * 0.1}s`;
-            loadingText.appendChild(span);
-        });
-        
-        loadingScreen.appendChild(loadingText);
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            // สร้างดาวระยิบระยับ
+            const starsContainer = document.createElement('div');
+            starsContainer.className = 'loading-stars';
+            
+            // สร้างดาว
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'loading-star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                
+                const starTypes = ['✦', '✧', '⋆', '✫', '✬', '✭', '✮', '✯', '✰'];
+                star.textContent = starTypes[Math.floor(Math.random() * starTypes.length)];
+                
+                const size = Math.random() * 15 + 10;
+                star.style.fontSize = `${size}px`;
+                
+                starsContainer.appendChild(star);
+            }
+            loadingScreen.appendChild(starsContainer);
 
-        // เพิ่มดาวก่อนและหลังข้อความ
-        const starBefore = document.createElement('span');
-        starBefore.className = 'loading-letter';
-        starBefore.textContent = '✨';
-        starBefore.style.animationDelay = '0s';
-        
-        const starAfter = document.createElement('span');
-        starAfter.className = 'loading-letter';
-        starAfter.textContent = '✨';
-        starAfter.style.animationDelay = `${text.length * 0.1}s`;
-        
-        loadingText.insertBefore(starBefore, loadingText.firstChild);
-        loadingText.appendChild(starAfter);
-    }
+            // สร้าง floating hearts
+            const heartsContainer = document.createElement('div');
+            heartsContainer.className = 'floating-hearts';
+            loadingScreen.appendChild(heartsContainer);
 
+            // สร้าง hearts animation
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.textContent = '💖';
+                heart.style.cssText = `
+                    position: absolute;
+                    left: ${Math.random() * 100}vw;
+                    font-size: ${Math.random() * 20 + 10}px;
+                    animation: floatHeart ${Math.random() * 3 + 2}s linear;
+                    z-index: 1;
+                `;
+                heartsContainer.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }
+            
+            setInterval(createHeart, 300);
+
+            const container = document.createElement('div');
+            container.className = 'loading-container';
+            
+            const loadingText = document.createElement('div');
+            loadingText.className = 'loading-text';
+            
+            const text = "CONGRATULATE";
+            text.split('').forEach((letter, i) => {
+                const span = document.createElement('span');
+                span.className = 'loading-letter';
+                span.textContent = letter;
+                span.style.animationDelay = `${i * 0.1}s`;
+                loadingText.appendChild(span);
+            });
+            
+            const starBefore = document.createElement('span');
+            starBefore.className = 'loading-letter';
+            starBefore.textContent = '✨';
+            starBefore.style.animationDelay = '0s';
+            
+            const starAfter = document.createElement('span');
+            starAfter.className = 'loading-letter';
+            starAfter.textContent = '✨';
+            starAfter.style.animationDelay = `${text.length * 0.1}s`;
+            
+            loadingText.insertBefore(starBefore, loadingText.firstChild);
+            loadingText.appendChild(starAfter);
+            
+            // แก้ไขสไตล์ปุ่ม
+            const playButton = document.createElement('button');
+            playButton.innerHTML = '🎵 เริ่มเพลง';
+            playButton.className = 'play-button';
+           
+            playButton.onmouseover = () => {
+                playButton.style.background = 'rgba(255, 255, 255, 0.3)';
+            };
+            
+            playButton.onmouseout = () => {
+                playButton.style.background = 'rgba(255, 255, 255, 0.2)';
+            };
+            
+            playButton.onclick = () => {
+                const audio = document.getElementById('bgMusic');
+                audio.play();
+                
+                // เพิ่ม animation แบบคลื่นให้กับตัวอักษรและปุ่ม
+                const letters = document.querySelectorAll('.loading-letter');
+                
+                // ใส่ปุ่มเข้าไปใน animation ด้วย
+                playButton.style.animation = `waveOut 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                playButton.style.animationDelay = `${letters.length * 80}ms`;
+                
+                // animation สำหรับตวอักษร
+                letters.forEach((letter, index) => {
+                    
+                    setTimeout(() => {
+                        letter.style.animation = 'none';
+                        void letter.offsetWidth;
+                        letter.style.animation = `waveOut 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                    }, index * 80);
+                });
+                
+                // เปลี่ยนหน้า
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.transition = 'opacity 0.8s ease';
+                    document.getElementById('loadingScreen').style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+                        document.getElementById('mainContent').style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            document.getElementById('mainContent').style.transition = 'opacity 0.8s ease';
+                            document.getElementById('mainContent').style.opacity = '1';
+                            document.getElementById('mainText').textContent = messages[0];
+                            document.getElementById('subText').textContent = subMessages[0];
+                            
+                            createStars();
+                            createBackgroundEffect();
+                            
+                            setInterval(cycleMessages, 3000);
+                            setTimeout(() => {
+                                createRandomImage().catch(console.error);
+                            }, 100);
+                            
+                        }, 50);
+                    }, 800);
+                }, 2500);
+            };
+            
+            // เพิ่มทั้ง loadingText และ playButton เข้าไปใน container
+            container.appendChild(loadingText);
+            container.appendChild(playButton);
+            loadingScreen.appendChild(container);
+        }
         function createStars() {
+            const starContainer = document.createElement('div');
+            starContainer.className = 'star-container';
+            document.getElementById('mainContent').appendChild(starContainer);
+
             for (let i = 0; i < 50; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
-                star.textContent = '✦';
-                star.style.fontSize = `${Math.random() * 2 + 1}px`;
-                document.getElementById('mainContent').appendChild(star);
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                
+                const starTypes = ['✦', '✧', '⋆', '✫', '✬', '✭', '✮', '✯', '✰'];
+                star.textContent = starTypes[Math.floor(Math.random() * starTypes.length)];
+                
+                const size = Math.random() * 15 + 10;
+                star.style.fontSize = `${size}px`;
+                
+                starContainer.appendChild(star);
             }
         }
 
-        function createParticles() {
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.textContent = '✦';
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.animationDelay = `${Math.random() * 2}s`;
-                document.getElementById('mainContent').appendChild(particle);
-            }
-        }
-
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.className = 'firework';
-            firework.textContent = '✨';
-            firework.style.left = `${Math.random() * 100}%`;
-            firework.style.top = `${Math.random() * 100}%`;
-            document.getElementById('mainContent').appendChild(firework);
-            setTimeout(() => firework.remove(), 1000);
-        }
-
-        let currentIndex = 0;
         function cycleMessages() {
             const mainText = document.getElementById('mainText');
             const subText = document.getElementById('subText');
             
+            mainText.style.animation = 'none';
+            subText.style.animation = 'none';
+            
+            void mainText.offsetWidth;
+            void subText.offsetWidth;
+            
             currentIndex = (currentIndex + 1) % messages.length;
+            
             mainText.textContent = messages[currentIndex];
             subText.textContent = subMessages[currentIndex];
-            createFirework();
-        }
-        function createBackgroundEffect() {
-        const background = document.createElement('div');
-        background.className = 'background-effect';
-        document.getElementById('loadingScreen').appendChild(background);
-
-        // สร้างประกายดาวพื้นหลัง
-        function createSparkle() {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = Math.random() * 100 + '%';
-            sparkle.style.top = Math.random() * 100 + '%';
-            sparkle.style.width = Math.random() * 10 + 5 + 'px';
-            sparkle.style.height = sparkle.style.width;
-            background.appendChild(sparkle);
-
-            // ลบประกายดาวหลังจากอนิเมชันจบ
-            setTimeout(() => sparkle.remove(), 2000);
-        }
-
-        // สร้างประกายดาวต่อเนื่อง
-        setInterval(createSparkle, 200);
-    }
-
-    function createLoadingScreen() {
-        const loadingScreen = document.getElementById('loadingScreen');
-        const loadingText = document.createElement('div');
-        loadingText.className = 'loading-text';
-        
-        // สร้างเอฟเฟกต์พื้นหลังก่อน
-        createBackgroundEffect();
-        
-        const text = "CONGRATULATE";
-        text.split('').forEach((letter, i) => {
-            const span = document.createElement('span');
-            span.className = 'loading-letter';
-            span.textContent = letter;
-            span.style.animationDelay = `${i * 0.1}s`;
-            loadingText.appendChild(span);
-        });
-        
-        // เพิ่มดาวที่หัวและท้าย
-        const starBefore = document.createElement('span');
-        starBefore.className = 'loading-letter';
-        starBefore.textContent = '✨';
-        starBefore.style.animationDelay = '0s';
-        
-        const starAfter = document.createElement('span');
-        starAfter.className = 'loading-letter';
-        starAfter.textContent = '✨';
-        starAfter.style.animationDelay = `${text.length * 0.1}s`;
-        
-        loadingText.insertBefore(starBefore, loadingText.firstChild);
-        loadingText.appendChild(starAfter);
-        
-        loadingScreen.appendChild(loadingText);
-    }
-
-    // เริ่มต้นแอพพลิเคชัน
-    window.onload = function() {
-        createLoadingScreen();
-        setTimeout(() => {
-            document.getElementById('loadingScreen').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-            document.getElementById('mainText').textContent = messages[0];
-            document.getElementById('subText').textContent = subMessages[0];
             
-            createStars();
-            createParticles();
-            setInterval(cycleMessages, 3000);
-            setInterval(createFirework, 2000);
-        }, 3000);
-    };
-       
+            mainText.style.animation = 'textFadeIn 1s ease-out';
+            subText.style.animation = 'textFadeIn 1s ease-out 0.5s';
+        }
 
-        // ทำให้เป็น Fullscreen
-        document.addEventListener('click', function() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
+        const soundControl = document.getElementById('soundControl');
+        let isMuted = false;
+
+        soundControl.addEventListener('click', () => {
+            const audio = document.getElementById('bgMusic');
+            if (isMuted) {
+                audio.volume = 1;
+                soundControl.textContent = '🔊';
+            } else {
+                audio.volume = 0;
+                soundControl.textContent = '🔈';
             }
+            isMuted = !isMuted;
         });
+
+        window.onload = function() {
+            createLoadingScreen();
+        };
+
+        // เพิ่มฟังก์ชันใหม่สำหรับอ่านไฟล์ในโฟลเดอร์
+        async function getImagesFromDirectory() {
+            try {
+                const response = await fetch('images');
+                const data = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                const files = Array.from(doc.querySelectorAll('a'))
+                    .map(a => a.href)
+                    .filter(href => href.match(/\.(jpg|jpeg|png|gif)$/i));
+                return files;
+            } catch (error) {
+                console.error('Error reading directory:', error);
+                return [];
+            }
+        }
+
+        async function createRandomImage() {
+            const FOLDER_ID = '1B8JIhz7HktbxO_qM0bnGtytNVrpKeBrR';
+            const API_KEY = 'AIzaSyAd1l7AbFWFztFj5wzElbf7_4OlEaBcbuE';
+            
+            try {
+                const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType)`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.error) {
+                    console.error('Google Drive API Error:', data.error);
+                    return;
+                }
+                
+                // เปลี่ยนรูปแบบ URL เป็น direct link
+                const imageFiles = data.files.map(file => 
+                    `https://lh3.googleusercontent.com/d/${file.id}`
+                );
+                
+                if (imageFiles.length === 0) {
+                    console.error('No images found in folder');
+                    return;
+                }
+
+                const container = document.querySelector('.background-effect');
+                
+                function addImage() {
+                    const img = document.createElement('img');
+                    img.src = imageFiles[Math.floor(Math.random() * imageFiles.length)];
+                    img.style.cssText = `
+                        position: absolute;
+                        width: ${Math.random() * 40 + 20}px;
+                        left: ${Math.random() * 90 + 5}vw;
+                        top: ${Math.random() * 90 + 5}vh;
+                        opacity: 0;
+                        transform: scale(0);
+                        animation: floatImage 5s ease-in-out;
+                        z-index: 1;
+                        pointer-events: none;
+                    `;
+                    
+                    img.onerror = () => {
+                        console.error('Failed to load image:', img.src);
+                        img.remove();
+                    };
+                    
+                    container.appendChild(img);
+                    setTimeout(() => img.remove(), 5000);
+                }
+                
+                const interval = setInterval(addImage, 1500);
+                return interval;
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+
+        // เพิ่ม CSS Animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatImage {
+                0% {
+                    opacity: 0;
+                    transform: scale(0) rotate(-45deg) translateY(50px);
+                }
+                20%, 80% {
+                    opacity: 0.7;
+                    transform: scale(1) rotate(0deg) translateY(0);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.5) rotate(45deg) translateY(-50px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
