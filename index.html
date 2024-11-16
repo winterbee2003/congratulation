@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ ยินดีด้วยกับการเรียนจบ! ✨</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000033;
+            font-family: 'Angsana New', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loadingScreen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-text {
+            font-size: 48px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: bounce 1s infinite;
+        }
+
+        .loading-letter {
+            display: inline-block;
+            animation: dropIn 1s forwards;
+            opacity: 0;
+            transform: translateY(-100vh);
+        }
+
+        @keyframes dropIn {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+            60% {
+                transform: translateY(20px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #mainContent {
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-text {
+            font-size: 72px;
+            color: #FFD700;
+            text-align: center;
+            margin: 20px;
+            animation: pulse 2s infinite;
+            position: absolute;
+            width: 100%;
+            top: 30%;
+            transform: translateY(-50%);
+        }
+
+        .sub-text {
+            font-size: 48px;
+            color: #00FFFF;
+            text-align: center;
+            margin: 20px;
+            position: absolute;
+            width: 100%;
+            top: 50%;
+        }
+
+        .star {
+            position: absolute;
+            color: white;
+            animation: twinkle 1.5s infinite;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: float 3s infinite;
+        }
+
+        .firework {
+            position: absolute;
+            animation: explode 1s forwards;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(10px, -10px); }
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.05); }
+        }
+
+        .exit-button {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen"></div>
+    <div id="mainContent">
+        <button class="exit-button" onclick="window.close()">×</button>
+        <div class="main-text" id="mainText"></div>
+        <div class="sub-text" id="subText"></div>
+    </div>
+
+    <script>
+        const messages = [
+            "🎓 ยินดีด้วยกับบัณฑิตใหม่ด้วยยยย 🎓",
+            "🎊 สำเร็จการศึกษาแล้วน่าาา 🎊",
+            "📚 ความพยายามนำมาซึ่งความสำเร็จ 📚",
+            "💪 เก่งมากเลยยย 💪",
+            "🌟 ภูมิใจในตัวแกมากๆ 🌟",
+            "⭐ ขอให้ประสบความสำเร็จ ⭐",
+            "🌈 อนาคตสดใสแน่นอน 🌈",
+            "💝 ยินดีด้วยกับความสำเร็จ 💝",
+            "✨ เก่งมากๆ ✨",
+            "🎉 ขอให้โชคดีนะครับที่รัก! 🎉"
+        ];
+
+        const subMessages = [
+            "ก้าวแรกของความสำเร็จในชีวิต",
+            "ความตั้งใจของแกส่งผลแล้ว",
+            "ทุกความพยายามไม่สูญเปล่า",
+            "ภูมิใจที่เห็นความสำเร็จของแก",
+            "เส้นทางแห่งความสำเร็จรออยู่ข้างหน้า",
+            "พร้อมสู่เส้นทางใหม่ที่ท้าทาย",
+            "นำความรู้สู่การพัฒนาตนเอง",
+            "เริ่มต้นชีวิตการทำงาน สู้ๆ!",
+            "ขอให้ประสบความสำเร็จในทุกด้าน",
+            "ขอให้มีความสุขกับการทำงาน"
+        ];
+
+        function createLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const text = "✨ CONGRATULATE ✨";
+            text.split('').forEach((letter, i) => {
+                const span = document.createElement('span');
+                span.className = 'loading-letter';
+                span.textContent = letter;
+                span.style.animationDelay = `${i * 0.1}s`;
+                loadingScreen.appendChild(span);
+            });
+        }
+
+        function createStars() {
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.textContent = '✦';
+                star.style.fontSize = `${Math.random() * 2 + 1}px`;
+                document.getElementById('mainContent').appendChild(star);
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = '✦';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 2}s`;
+                document.getElementById('mainContent').appendChild(particle);
+            }
+        }
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.textContent = '✨';
+            firework.style.left = `${Math.random() * 100}%`;
+            firework.style.top = `${Math.random() * 100}%`;
+            document.getElementById('mainContent').appendChild(firework);
+            setTimeout(() => firework.remove(), 1000);
+        }
+
+        let currentIndex = 0;
+        function cycleMessages() {
+            const mainText = document.getElementById('mainText');
+            const subText = document.getElementById('subText');
+            
+            currentIndex = (currentIndex + 1) % messages.length;
+            mainText.textContent = messages[currentIndex];
+            subText.textContent = subMessages[currentIndex];
+            createFirework();
+        }
+
+        window.onload = function() {
+            createLoadingScreen();
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('mainText').textContent = messages[0];
+                document.getElementById('subText').textContent = subMessages[0];
+                
+                createStars();
+                createParticles();
+                setInterval(cycleMessages, 3000);
+                setInterval(createFirework, 2000);
+            }, 3000);
+        };
+
+        // ทำให้เป็น Fullscreen
+        document.addEventListener('click', function() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
