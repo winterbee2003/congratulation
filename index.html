@@ -351,6 +351,73 @@
             0%, 100% { opacity: 0.2; transform: scale(1); }
             50% { opacity: 0.8; transform: scale(1.1); }
         }
+
+        @keyframes floatImageRight {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-30deg) translate(-100px, 50px);
+                filter: blur(3px) brightness(0.8);
+            }
+            15% {
+                opacity: 0.2;
+                transform: scale(0.4) rotate(-20deg) translate(-50px, 30px);
+                filter: blur(2px) brightness(0.9);
+            }
+            30%, 70% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg) translate(0, 0);
+                filter: blur(0) brightness(1.1);
+            }
+            85% {
+                opacity: 0.2;
+                transform: scale(0.4) rotate(20deg) translate(50px, -30px);
+                filter: blur(2px) brightness(0.9);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(30deg) translate(100px, -50px);
+                filter: blur(3px) brightness(0.8);
+            }
+        }
+
+        @keyframes floatImageLeft {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(30deg) translate(100px, 50px);
+                filter: blur(3px) brightness(0.8);
+            }
+            15% {
+                opacity: 0.2;
+                transform: scale(0.4) rotate(20deg) translate(50px, 30px);
+                filter: blur(2px) brightness(0.9);
+            }
+            30%, 70% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg) translate(0, 0);
+                filter: blur(0) brightness(1.1);
+            }
+            85% {
+                opacity: 0.2;
+                transform: scale(0.4) rotate(-20deg) translate(-50px, -30px);
+                filter: blur(2px) brightness(0.9);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(-30deg) translate(-100px, -50px);
+                filter: blur(3px) brightness(0.8);
+            }
+        }
+
+        /* เพิ่ม hover effect สำหรับภาพ */
+        .background-effect img {
+            transition: transform 0.3s ease;
+        }
+
+        .background-effect img:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 10 !important;
+            filter: brightness(1.2) contrast(1.1) blur(0) !important;
+        }
     </style>
 </head>
 <body>
@@ -369,7 +436,7 @@
 
     <script>
         const messages = [
-            "🎓 ยินดีด้วยกับบัณฑิตใหม่ด้วยยยย 🎓",
+            "🎓 ยินดีด้วยกับบัณฑิตใหม่ด้วยยย 🎓",
             "🎊 สำเร็จการศึกษาแล้วน่าาา 🎊",
             "📚 ความพยายามนำมาซึ่งความสำเร็จ 📚",
             "💪 เก่งมากเลยยย 💪",
@@ -387,7 +454,7 @@
             "ทุกความพยายามไม่สูญเปล่า",
             "ภูมิใจที่เห็นความสำเร็จของแก",
             "เส้นทางแห่งความสำเร็จรออยู่ข้างหน้า",
-            "พร้อมสู่เส้นทางใหม่ที่ท้าทาย",
+            "พร้อมสู่ส้นทางใหม่ที่ท้าทาย",
             "นำความรู้สู่การพัฒนาตนเอง",
             "เริ่มต้นชีวิตการทำงาน สู้ๆ!",
             "ขอให้ประสบความสำเร็จในทุกด้าน",
@@ -665,16 +732,33 @@
                 function addImage() {
                     const img = document.createElement('img');
                     img.src = imageFiles[Math.floor(Math.random() * imageFiles.length)];
+                    
+                    // สุ่มขนาดให้ใหญ่ขึ้น
+                    const size = Math.random() * 120 + 100; // 100-220px
+                    
+                    // สุ่มมุมหมุน
+                    const rotation = Math.random() * 40 - 20; // -20 ถึง 20 องศา
+                    
+                    // สุ่มทิศทางการเคลื่อนที่
+                    const direction = Math.random() < 0.5 ? -1 : 1;
+                    
+                    // สุ่มความเร็วในการเคลื่อนที่
+                    const duration = Math.random() * 3 + 8; // 8-11 วินาที
+                    
                     img.style.cssText = `
                         position: absolute;
-                        width: ${Math.random() * 40 + 20}px;
-                        left: ${Math.random() * 90 + 5}vw;
-                        top: ${Math.random() * 90 + 5}vh;
+                        width: ${size}px;
+                        left: ${Math.random() * 70 + 15}vw;
+                        top: ${Math.random() * 70 + 15}vh;
                         opacity: 0;
                         transform: scale(0);
-                        animation: floatImage 5s ease-in-out;
+                        animation: floatImage${direction > 0 ? 'Right' : 'Left'} ${duration}s ease-in-out;
                         z-index: 1;
                         pointer-events: none;
+                        border-radius: 15px;
+                        box-shadow: 0 0 20px rgba(255,255,255,0.4);
+                        transform-origin: center center;
+                        filter: brightness(1.1) contrast(1.1);
                     `;
                     
                     img.onerror = () => {
@@ -683,10 +767,11 @@
                     };
                     
                     container.appendChild(img);
-                    setTimeout(() => img.remove(), 5000);
+                    setTimeout(() => img.remove(), duration * 1000);
                 }
                 
-                const interval = setInterval(addImage, 1500);
+                // เพิ่มระยะเวลาระหว่างภาพ
+                const interval = setInterval(addImage, 2500);
                 return interval;
                 
             } catch (error) {
@@ -694,22 +779,62 @@
             }
         }
 
-
         // เพิ่ม CSS Animation
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes floatImage {
+            @keyframes floatImageRight {
                 0% {
                     opacity: 0;
-                    transform: scale(0) rotate(-45deg) translateY(50px);
+                    transform: scale(0) rotate(-30deg) translate(-100px, 50px);
+                    filter: blur(3px) brightness(0.8);
                 }
-                20%, 80% {
-                    opacity: 0.7;
-                    transform: scale(1) rotate(0deg) translateY(0);
+                15% {
+                    opacity: 0.2;
+                    transform: scale(0.4) rotate(-20deg) translate(-50px, 30px);
+                    filter: blur(2px) brightness(0.9);
+                }
+                30%, 70% {
+                    opacity: 1;
+                    transform: scale(1) rotate(0deg) translate(0, 0);
+                    filter: blur(0) brightness(1.1);
+                }
+                85% {
+                    opacity: 0.2;
+                    transform: scale(0.4) rotate(20deg) translate(50px, -30px);
+                    filter: blur(2px) brightness(0.9);
                 }
                 100% {
                     opacity: 0;
-                    transform: scale(0.5) rotate(45deg) translateY(-50px);
+                    transform: scale(0) rotate(30deg) translate(100px, -50px);
+                    filter: blur(3px) brightness(0.8);
+                }
+            }
+
+            @keyframes floatImageLeft {
+                0% {
+                    opacity: 0;
+                    transform: scale(0) rotate(30deg) translate(100px, 50px);
+                    filter: blur(3px) brightness(0.8);
+                }
+                15% {
+                    opacity: 0.2;
+                    transform: scale(0.4) rotate(20deg) translate(50px, 30px);
+                    filter: blur(2px) brightness(0.9);
+                }
+                30%, 70% {
+                    opacity: 1;
+                    transform: scale(1) rotate(0deg) translate(0, 0);
+                    filter: blur(0) brightness(1.1);
+                }
+                85% {
+                    opacity: 0.2;
+                    transform: scale(0.4) rotate(-20deg) translate(-50px, -30px);
+                    filter: blur(2px) brightness(0.9);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0) rotate(-30deg) translate(-100px, -50px);
+                    filter: blur(3px) brightness(0.8);
                 }
             }
         `;
