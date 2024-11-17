@@ -53,22 +53,20 @@
             flex-direction: row;
             align-items: center;
             gap: 1.5vw;
-            font-size: 8vw;
+            font-size: min(8vw, 6vh);
             font-weight: bold;
             position: relative;
             z-index: 2;
         }
 
         .loading-letter {
-            display: inline-block;
-            animation: dropIn 1s forwards, rainbow 2s infinite;
-            opacity: 0;
-            transform: translateY(-100vh);
+            font-size: min(6vw, 5vh);
             text-shadow: 
-                0 0 1vw rgba(255,255,255,0.8),
-                0 0 2vw rgba(255,255,255,0.5),
-                0 0 3vw rgba(255,255,255,0.3),
-                0 0 4vw rgba(255,192,203,0.3);
+                0 0 min(1vw, 1vh) rgba(255,255,255,0.8),
+                0 0 min(2vw, 2vh) rgba(255,255,255,0.5),
+                0 0 min(3vw, 3vh) rgba(255,255,255,0.3),
+                0 0 min(4vw, 4vh) rgba(255,192,203,0.3);
+            animation: rainbow 2s linear infinite;
         }
 
         @keyframes rainbow {
@@ -78,6 +76,24 @@
             60% { color: #99FF99; }
             80% { color: #99FFFF; }
             100% { color: #FF9999; }
+        }
+
+        @keyframes fadeToBlack {
+            0% {
+                color: currentColor;
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                color: #000;
+                transform: translateY(-20px);
+                opacity: 0.7;
+            }
+            100% {
+                color: #000;
+                transform: translateY(50px);
+                opacity: 0;
+            }
         }
 
         @keyframes dropIn {
@@ -119,7 +135,7 @@
         }
 
         .main-text {
-            font-size: 7vw;
+            font-size: min(7vw, 5vh);
             color: #FFD700;
             text-align: center;
             position: absolute;
@@ -129,16 +145,16 @@
             width: 90%;
             z-index: 2;
             text-shadow: 
-                0 0 1vw rgba(255,255,255,0.5),
-                0 0 2vw rgba(255,255,255,0.3),
-                0 0 3vw rgba(255,215,0,0.3);
+                0 0 min(1vw, 1vh) rgba(255,255,255,0.5),
+                0 0 min(2vw, 2vh) rgba(255,255,255,0.3),
+                0 0 min(3vw, 3vh) rgba(255,215,0,0.3);
             animation: textFadeIn 1s ease-out;
             font-weight: bold;
             padding: 0 20px;
         }
 
         .sub-text {
-            font-size: 5vw;
+            font-size: min(5vw, 3.5vh);
             color: #00FFFF;
             text-align: center;
             position: absolute;
@@ -148,9 +164,9 @@
             width: 90%;
             z-index: 2;
             text-shadow: 
-                0 0 1vw rgba(255,255,255,0.3),
-                0 0 2vw rgba(255,255,255,0.2),
-                0 0 3vw rgba(0,255,255,0.2);
+                0 0 min(1vw, 1vh) rgba(255,255,255,0.3),
+                0 0 min(2vw, 2vh) rgba(255,255,255,0.2),
+                0 0 min(3vw, 3vh) rgba(0,255,255,0.2);
             animation: textFadeIn 1s ease-out 0.5s;
             padding: 0 20px;
         }
@@ -173,9 +189,9 @@
 
         .exit-button {
             position: fixed;
-            top: 1vw;
-            right: 2vw;
-            font-size: 3vw;
+            top: min(1vw, 1vh);
+            right: min(2vw, 2vh);
+            font-size: min(3vw, 3vh);
             color: white;
             background: none;
             border: none;
@@ -185,19 +201,19 @@
 
         .sound-control {
             position: fixed;
-            top: 2vw;
-            left: 2vw;
+            top: min(2vw, 2vh);
+            left: min(2vw, 2vh);
             z-index: 1000;
             background: rgba(255, 255, 255, 0.2);
             border: none;
             border-radius: 50%;
-            width: 4vw;
-            height: 4vw;
+            width: min(4vw, 4vh);
+            height: min(4vw, 4vh);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2vw;
+            font-size: min(2vw, 2vh);
             color: white;
             transition: all 0.3s ease;
         }
@@ -259,20 +275,11 @@
             100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         }
 
-        .loading-letter {
-            font-size: 6vw;
-            text-shadow: 
-                0 0 1vw rgba(255,255,255,0.8),
-                0 0 2vw rgba(255,255,255,0.5),
-                0 0 3vw rgba(255,255,255,0.3),
-                0 0 4vw rgba(255,192,203,0.3);
-        }
-
         .play-button {
             position: relative;
-            margin-top: 2vw;
-            padding: 1.5vw 4vw;
-            font-size: 2.5vw;
+            margin-top: min(2vw, 2vh);
+            padding: min(1.5vw, 1.5vh) min(4vw, 4vh);
+            font-size: min(2.5vw, 2.5vh);
             background: linear-gradient(45deg, #FF69B4, #FFB6C1);
             border: none;
             color: white;
@@ -426,60 +433,89 @@
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                gap: 4vw;
-                padding: 2vh 4vw;
-                width: 90vw;
+                gap: min(4vw, 4vh);
+                padding: 2vh min(4vw, 4vh);
             }
 
             .loading-text {
-                font-size: 5vh;
-                gap: 1vh;
+                font-size: min(5vw, 5vh);
+                gap: min(1vw, 1vh);
             }
 
             .loading-letter {
-                font-size: 4vh;
-            }
-
-            .play-button {
-                margin-top: 0;
-                padding: 1vh 3vw;
-                font-size: 2.5vh;
+                font-size: min(4vw, 4vh);
             }
 
             .main-text {
-                font-size: 5vh;
+                font-size: min(5vw, 5vh);
                 top: 30%;
-                width: 80%;
             }
 
             .sub-text {
-                font-size: 3.5vh;
+                font-size: min(3.5vw, 3.5vh);
                 top: 70%;
-                width: 80%;
             }
 
-            /* ปรับขนาดปุ่มควบคุม */
+            /* ปรับขนาดปุ่มควบคุมใน landscape */
             .exit-button {
-                font-size: 3vh;
-                top: 2vh;
-                right: 2vw;
+                font-size: min(3vw, 3vh);
+                top: min(2vw, 2vh);
             }
 
             .sound-control {
-                width: 4vh;
-                height: 4vh;
-                font-size: 2vh;
-                top: 2vh;
-                left: 2vw;
+                width: min(4vw, 4vh);
+                height: min(4vw, 4vh);
+                font-size: min(2vw, 2vh);
             }
+        }
 
-            /* ปรับขนาดดาว */
-            .loading-star {
-                font-size: calc(1vh + 5px);
+        /* Media Queries สำหรับอุปกรณ์ขนาดต่างๆ */
+        @media screen and (max-width: 480px) {
+            .loading-text { font-size: min(10vw, 7vh); }
+            .loading-letter { font-size: min(8vw, 6vh); }
+            .main-text { font-size: min(9vw, 6vh); }
+            .sub-text { font-size: min(7vw, 4vh); }
+            .play-button { font-size: min(4vw, 3vh); }
+        }
+
+        @media screen and (min-width: 481px) and (max-width: 768px) {
+            .loading-text { font-size: min(8vw, 6vh); }
+            .loading-letter { font-size: min(6vw, 5vh); }
+            .main-text { font-size: min(7vw, 5vh); }
+            .sub-text { font-size: min(5vw, 3.5vh); }
+            .play-button { font-size: min(3vw, 2.5vh); }
+        }
+
+        @media screen and (min-width: 769px) {
+            .loading-text { font-size: min(6vw, 5vh); }
+            .loading-letter { font-size: min(4vw, 4vh); }
+            .main-text { font-size: min(5vw, 4vh); }
+            .sub-text { font-size: min(3vw, 2.5vh); }
+            .play-button { font-size: min(2vw, 2vh); }
+        }
+
+        /* สำหรับหน้าจอขนาดใหญ่มาก */
+        @media screen and (min-width: 1200px) {
+            .loading-text { font-size: min(4vw, 4vh); }
+            .loading-letter { font-size: min(3vw, 3vh); }
+            .main-text { font-size: min(3.5vw, 3.5vh); }
+            .sub-text { font-size: min(2.5vw, 2.5vh); }
+            .play-button { font-size: min(1.5vw, 1.5vh); }
+        }
+
+        /* เพิ่ม animation wave เมื่อเข้าหน้าเว็บ */
+        @keyframes waveIn {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
             }
-
-            .star {
-                font-size: calc(1vh + 5px);
+            60% {
+                transform: translateY(-20px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
             }
         }
     </style>
@@ -500,15 +536,15 @@
 
     <script>
         const messages = [
-            "🎓 ยินดีด้วยกับบัณฑิตใหม่ด้วย 🎓",
-            "🎊 สำเร็จการศึกษาแล้วน่า 🎊",
-            "💪 เก่งมากเลยยย 💪",
-            "🌟 ภูมิใจในตัวแกมากๆ 🌟",
-            "⭐ ขอให้ประสบความสำเร็จ ⭐",
-            "🌈 อนาคตสดใสแน่นอน 🌈",
-            "💝 ยินดีด้วยกับความสำเร็จ 💝",
-            "✨ เก่งมากๆ ✨",
-            "🎉 ขอให้โชคดีนะครับที่รัก! 🎉"
+            "🎓 ขอแสดงความยินดีกับบัณฑิตใหม่ด้วย! ความสำเร็จนี้คือจุดเริ่มต้นของสิ่งดีๆ ที่กำลังจะมาถึง 🎓", 
+            "🎊 ความพยายามของแกสำเร็จแล้ว ยินดีด้วยที่สำเร็จการศึกษา! 🎊", 
+            "💪 แกทำได้ดีมากและควรภูมิใจในตัวเองจริงๆ เก่งมากเลย! 💪",
+             "🌟 ภูมิใจในตัวแกมากๆ กับความสำเร็จที่เกิดขึ้นในวันนี้ 🌟", 
+             "⭐ ขอให้ประสบความสำเร็จในทุกเส้นทางที่เลือกเดินต่อไปนะ ⭐", 
+             "🌈 ขอให้อดีตเป็นแรงบันดาลใจและอนาคตของแกสดใสเสมอ 🌈", 
+             "💝 ยินดีด้วยกับความสำเร็จที่แกได้ทำสำเร็จไปแล้วจริงๆ! 💝", 
+             "✨ ทุกความสำเร็จเกิดจากความเก่งและความตั้งใจของแก เก่งมากๆ นะ! ✨",
+              "🎉 ขอให้โชคดีในทุกเรื่องราวที่กำลังจะเริ่ม และมีความสุขในทุกวันนะครับที่รัก! 🎉"
         ];
 
         const subMessages = [
@@ -518,7 +554,7 @@
             "ภูมิใจในตัวเองเสมอนะ แกทำได้ยอดเยี่ยมแล้ว", 
             "เส้นทางแห่งความสำเร็จอยู่ใกล้กว่าที่คิด มุ่งมั่นต่อไป!", 
             "พร้อมรับความท้าทายใหม่และสร้างสิ่งดีๆ ต่อไป", 
-            "นำความรู้ที่มีมาสร้างการเติบโตให้กั��ตัวเองได��เลย",
+            "นำความรู้ที่มีมาสร้างการเติบโตให้กับตัวเองได้เลย",
              "เริ่มต้นชีวิตการทำงานแล้ว สู้ๆ ขอให้สนุกและมีพลังเสมอ", 
              "ขอให้ประสบความสำเร็จในทุกเรื่องที่ทำ!", 
              "ขอให้การทำงานนำพาความสุขและความสำเร็จมาให้เสมอ"
@@ -549,7 +585,7 @@
         function createLoadingScreen() {
             const loadingScreen = document.getElementById('loadingScreen');
             
-            // สร้าดาวระยิบระยับ
+            // สร้างดาวระยิบระยับ
             const starsContainer = document.createElement('div');
             starsContainer.className = 'loading-stars';
             
@@ -604,54 +640,45 @@
                 const span = document.createElement('span');
                 span.className = 'loading-letter';
                 span.textContent = letter;
-                span.style.animationDelay = `${i * 0.1}s`;
+                span.style.animation = `
+                    rainbow 2s linear infinite,
+                    waveIn 1s ease-out forwards
+                `;
+                span.style.animationDelay = `${i * 0.1}s, ${i * 0.1}s`;
                 loadingText.appendChild(span);
             });
             
             const starBefore = document.createElement('span');
             starBefore.className = 'loading-letter';
             starBefore.textContent = '✨';
+            starBefore.style.animation = `waveIn 1s ease-out forwards`;
             starBefore.style.animationDelay = '0s';
             
             const starAfter = document.createElement('span');
             starAfter.className = 'loading-letter';
             starAfter.textContent = '✨';
+            starAfter.style.animation = `waveIn 1s ease-out forwards`;
             starAfter.style.animationDelay = `${text.length * 0.1}s`;
             
             loadingText.insertBefore(starBefore, loadingText.firstChild);
             loadingText.appendChild(starAfter);
             
-            // แก้ไขสไตล์ปุ่ม
             const playButton = document.createElement('button');
             playButton.innerHTML = '🎵 เริ่มเพลง';
             playButton.className = 'play-button';
-           
-            playButton.onmouseover = () => {
-                playButton.style.background = 'rgba(255, 255, 255, 0.3)';
-            };
-            
-            playButton.onmouseout = () => {
-                playButton.style.background = 'rgba(255, 255, 255, 0.2)';
-            };
             
             playButton.onclick = () => {
                 const audio = document.getElementById('bgMusic');
                 audio.play();
                 
-                // เพิ่ม animation แบบคลื่นให้กับตัวอักษรและปุ่ม
                 const letters = document.querySelectorAll('.loading-letter');
                 
-                // ใส่ปุ่มเข้าไปใน animation ด้วย
-                playButton.style.animation = `waveOut 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-                playButton.style.animationDelay = `${letters.length * 80}ms`;
-                
-                // animation สำหรับตวอักษร
                 letters.forEach((letter, index) => {
-                    
                     setTimeout(() => {
                         letter.style.animation = 'none';
                         void letter.offsetWidth;
-                        letter.style.animation = `waveOut 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                        letter.style.animation = 'fadeToBlack 1.5s forwards';
+                        letter.style.animationDelay = `${index * 0.1}s`;
                     }, index * 80);
                 });
                 
@@ -684,7 +711,6 @@
                 }, 2500);
             };
             
-            // เพิ่มทั้ง loadingText และ playButton เข้าไปใน container
             container.appendChild(loadingText);
             container.appendChild(playButton);
             loadingScreen.appendChild(container);
