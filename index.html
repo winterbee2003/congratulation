@@ -419,6 +419,69 @@
             z-index: 10 !important;
             filter: brightness(1.2) contrast(1.1) blur(0) !important;
         }
+
+        /* เพิ่ม CSS สำหรับ Landscape orientation */
+        @media screen and (orientation: landscape) {
+            .loading-container {
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 4vw;
+                padding: 2vh 4vw;
+                width: 90vw;
+            }
+
+            .loading-text {
+                font-size: 5vh;
+                gap: 1vh;
+            }
+
+            .loading-letter {
+                font-size: 4vh;
+            }
+
+            .play-button {
+                margin-top: 0;
+                padding: 1vh 3vw;
+                font-size: 2.5vh;
+            }
+
+            .main-text {
+                font-size: 5vh;
+                top: 30%;
+                width: 80%;
+            }
+
+            .sub-text {
+                font-size: 3.5vh;
+                top: 70%;
+                width: 80%;
+            }
+
+            /* ปรับขนาดปุ่มควบคุม */
+            .exit-button {
+                font-size: 3vh;
+                top: 2vh;
+                right: 2vw;
+            }
+
+            .sound-control {
+                width: 4vh;
+                height: 4vh;
+                font-size: 2vh;
+                top: 2vh;
+                left: 2vw;
+            }
+
+            /* ปรับขนาดดาว */
+            .loading-star {
+                font-size: calc(1vh + 5px);
+            }
+
+            .star {
+                font-size: calc(1vh + 5px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -455,7 +518,7 @@
             "ภูมิใจในตัวเองเสมอนะ แกทำได้ยอดเยี่ยมแล้ว", 
             "เส้นทางแห่งความสำเร็จอยู่ใกล้กว่าที่คิด มุ่งมั่นต่อไป!", 
             "พร้อมรับความท้าทายใหม่และสร้างสิ่งดีๆ ต่อไป", 
-            "นำความรู้ที่มีมาสร้างการเติบโตให้กับตัวเองได้เลย",
+            "นำความรู้ที่มีมาสร้างการเติบโตให้กั��ตัวเองได��เลย",
              "เริ่มต้นชีวิตการทำงานแล้ว สู้ๆ ขอให้สนุกและมีพลังเสมอ", 
              "ขอให้ประสบความสำเร็จในทุกเรื่องที่ทำ!", 
              "ขอให้การทำงานนำพาความสุขและความสำเร็จมาให้เสมอ"
@@ -686,7 +749,7 @@
             createLoadingScreen();
         };
 
-        // เพิ่มฟังก์ชันใหม่สำหรับอ่านไฟล์ในโฟลเดอร์
+        // เพิ่มฟังก์ชัใหม่สำหรับอ่านไฟล์ในโฟลเดอร์
         async function getImagesFromDirectory() {
             try {
                 const response = await fetch('images');
@@ -733,8 +796,11 @@
                     const img = document.createElement('img');
                     img.src = imageFiles[Math.floor(Math.random() * imageFiles.length)];
                     
-                    // ปรับขนาดตาม viewport
-                    const size = Math.random() * 10 + 10; // 10-20vw
+                    // ปรับขนาดตาม orientation
+                    const isLandscape = window.innerWidth > window.innerHeight;
+                    const size = isLandscape 
+                        ? Math.random() * 8 + 8  // 8-16vh สำหรับแนวนอน
+                        : Math.random() * 10 + 10; // 10-20vw สำหรับแนวตั้ง
                     
                     // สุ่มมุมหมุน
                     const rotation = Math.random() * 40 - 20; // -20 ถึง 20 องศา
@@ -747,7 +813,7 @@
                     
                     img.style.cssText = `
                         position: absolute;
-                        width: ${size}vw;
+                        ${isLandscape ? `height: ${size}vh` : `width: ${size}vw`};
                         left: ${Math.random() * 70 + 15}vw;
                         top: ${Math.random() * 70 + 15}vh;
                         opacity: 0;
@@ -755,8 +821,8 @@
                         animation: floatImage${direction > 0 ? 'Right' : 'Left'} ${duration}s ease-in-out;
                         z-index: 1;
                         pointer-events: none;
-                        border-radius: 1.5vw;
-                        box-shadow: 0 0 2vw rgba(255,255,255,0.4);
+                        border-radius: ${isLandscape ? '1vh' : '1.5vw'};
+                        box-shadow: 0 0 ${isLandscape ? '2vh' : '2vw'} rgba(255,255,255,0.4);
                         transform-origin: center center;
                         filter: brightness(1.1) contrast(1.1);
                     `;
@@ -839,6 +905,25 @@
             }
         `;
         document.head.appendChild(style);
+
+        // เพิ่มที่ส่วนล่างของ script
+        window.addEventListener('orientationchange', function() {
+            // รอให้การหมุนหน้าจอเสร็จสมบูรณ์
+            setTimeout(() => {
+                // ปรับขนาดองค์ประกอบต่างๆ ใหม่
+                const isLandscape = window.innerWidth > window.innerHeight;
+                const mainText = document.getElementById('mainText');
+                const subText = document.getElementById('subText');
+                
+                if (isLandscape) {
+                    mainText.style.fontSize = '5vh';
+                    subText.style.fontSize = '3.5vh';
+                } else {
+                    mainText.style.fontSize = '7vw';
+                    subText.style.fontSize = '5vw';
+                }
+            }, 100);
+        });
     </script>
 </body>
 </html>
